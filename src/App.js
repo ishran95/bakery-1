@@ -1,25 +1,58 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import Button from './components/Button'
+import Add from './components/Add'
+import List from './components/List'
+import Pay from './components/Pay'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+class App extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      activeTab: "add",
+      items: []
+    }
+  }
+
+  handleButtonClick = (e) => {
+    this.setState({ activeTab: e.target.innerText })
+  }
+
+  addItem = (itemName, itemPrice) => {
+    this.setState({ items: [ ...this.state.items, { name: itemName, price: itemPrice } ] })
+  }
+
+	render() {
+    console.log(this.state)
+
+		return(
+      <>
+        <Button
+          isSelected={this.state.activeTab === "add"}
+          handleClick={this.handleButtonClick}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+            add
+        </Button>
+        <Button
+          isSelected={this.state.activeTab === "list"}
+          handleClick={this.handleButtonClick}
+        >
+          list
+        </Button>
+        <Button
+          isSelected={this.state.activeTab === "pay"}
+          handleClick={this.handleButtonClick}
+        >
+          pay
+        </Button>
+        
+        {this.state.activeTab === "add" && <Add addItem={this.addItem} />}
+        {this.state.activeTab === "list" && <List items={this.state.items} />}
+        {this.state.activeTab === "pay" && <Pay />}
+      </>
+		)
+	}
 }
 
-export default App;
+export default App
