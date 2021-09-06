@@ -4,6 +4,8 @@ import Button from './components/Button'
 import Add from './components/Add'
 import List from './components/List'
 import Pay from './components/Pay'
+import Card from './components/Card.jsx'
+
 
 class App extends React.Component {
   constructor(props) {
@@ -47,9 +49,10 @@ class App extends React.Component {
           pay
         </Button>
         
+        
         {this.state.activeTab === "add" && <Add addItem={this.addItem} />}
         {this.state.activeTab === "list" && <List items={this.state.items} />}
-        {this.state.activeTab === "pay" && <Pay />}
+        {this.state.activeTab === "pay" && <Pay items={this.state.items} />}
       </>
 		)
 	}
